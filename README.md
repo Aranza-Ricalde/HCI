@@ -6,5 +6,5 @@ This is the repository of the team ## nombre equipo
 
 | Name          | Our sexy faces |
 | ------------- | ------------- |
-| Aranza Ricalde  |  ![Aranza-Ricalde](assets/fotopreciosa.jpg "Aranza-Ricalde") height="220"> |
-| Antonio Cituk  | <img src="assets/IMG-20210302-WA0049.jpg"  width="200" height="220">|
+| Aranza Ricalde  |  <img src="assets/fotopreciosa.jpg" height="220"> |
+| Antonio Cituk  | <img src="assets/IMG-20210302-WA0049.jpg"  width="200" height="220"> |
