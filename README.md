@@ -1,6 +1,6 @@
 # Human Computer Interaction 🤖
 
-This is the repository of the team <img src="https://mma.prnewswire.com/media/1513369/Educative_Logo.jpg" height="100">
+This is the repository of the team <img src="https://mma.prnewswire.com/media/1513369/Educative_Logo.jpg" height="10">
 
 ### Get to know the team 🐙✨
 
