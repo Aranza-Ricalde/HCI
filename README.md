@@ -4,7 +4,7 @@ This is the repository of the team ## nombre equipo
 
 ### Get to know the team 🐙✨
 
-| Nombre          | Foto preciosa |
+| Name          | Our sexy faces |
 | ------------- | ------------- |
 | Aranza Ricalde  |   |
-| Content Cell  | Content Cell  |
+| Antonio Cituk  | Content Cell  |
