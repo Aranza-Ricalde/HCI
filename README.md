@@ -1,6 +1,6 @@
 # Human Computer Interaction 🤖
 
-Hi there 👋, welcome to the repository of our team, have a look aroung and get to know a little about us
+Hi there 👋, welcome to the repository of our team, have a look around and get to know a little about us
 
 > <img src="https://mma.prnewswire.com/media/1513369/Educative_Logo.jpg" height="20">
 
