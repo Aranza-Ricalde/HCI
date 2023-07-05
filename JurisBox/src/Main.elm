@@ -5,6 +5,7 @@ import Css exposing (..)
 import Html.Styled exposing (..)
 import Material.Icons as Filled
 import Material.Icons.Types exposing (Coloring(..))
+import Set exposing (Set)
 import Svg.Styled
 import UI.Styles
 
@@ -13,13 +14,39 @@ import UI.Styles
 ---- MODEL ----
 
 
+type alias Box =
+    { question : String
+    , correctAnswer : String
+    , falseAnswers : ( String, String, String )
+    }
+
+
+boxes : List Box
+boxes =
+    []
+
+
+type CurrentPage
+    = StartPage
+    | BoxesHub
+    | BoxPrompt
+    | SuccessMessage
+    | ErrorMessage
+
+
 type alias Model =
-    {}
+    { currentPage : CurrentPage
+    , answeredBoxes : Set Box
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( { currentPage = StartPage
+      , answeredBoxes = Set.empty
+      }
+    , Cmd.none
+    )
 
 
 
@@ -41,50 +68,68 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    styled div
-        [ property "display" "grid"
-        , property "justify-items" "center"
-        , property "grid-template-columns" "1fr"
-        , property "grid-template-rows" "4fr 5fr"
-        , property "row-gap" "3.25rem"
-        , width (pct 100)
-        , height (vh 100)
-        ]
-        []
-        [ styled h1
-            [ UI.Styles.heading
-            , property "align-self" "end"
-            ]
-            []
-            [ text "Descubriendo la Justicia" ]
-        , styled
-            button
-            [ UI.Styles.button
-            , property "align-self" "start"
-            , width (rem 18)
-            , property "display" "grid"
-            , property "grid-template-columns" "auto auto"
-            , property "align-items" "center"
-            , property "justify-content" "center"
-            , property "grid-column-gap" "1rem"
-            ]
-            []
-            [ text "Jugar"
-            , styled div
-                [ position relative, width (px 16) ]
+    case model.currentPage of
+        StartPage ->
+            styled div
+                [ property "display" "grid"
+                , property "justify-items" "center"
+                , property "grid-template-columns" "1fr"
+                , property "grid-template-rows" "4fr 5fr"
+                , property "row-gap" "3.25rem"
+                , width (pct 100)
+                , height (vh 100)
+                ]
                 []
-                [ styled div
-                    [ position absolute
-                    , property "display" "grid"
-                    , top (pct 50)
-                    , transform (translateY (pct -50))
+                [ styled h1
+                    [ UI.Styles.heading
+                    , property "align-self" "end"
                     ]
                     []
-                    [ Svg.Styled.fromUnstyled (Filled.chevron_right 48 Inherit)
+                    [ text "Descubriendo la Justicia" ]
+                , styled
+                    button
+                    [ UI.Styles.button
+                    , property "align-self" "start"
+                    , width (rem 18)
+                    , property "display" "grid"
+                    , property "grid-template-columns" "auto auto"
+                    , property "align-items" "center"
+                    , property "justify-content" "center"
+                    , property "grid-column-gap" "1rem"
+                    ]
+                    []
+                    [ text "Jugar"
+                    , styled div
+                        [ position relative, width (px 16) ]
+                        []
+                        [ styled div
+                            [ position absolute
+                            , property "display" "grid"
+                            , top (pct 50)
+                            , transform (translateY (pct -50))
+                            ]
+                            []
+                            [ Svg.Styled.fromUnstyled (Filled.chevron_right 48 Inherit)
+                            ]
+                        ]
                     ]
                 ]
-            ]
-        ]
+
+        BoxesHub ->
+            if Set.size model.answeredBoxes /= List.length boxes then
+                text "TODO: Boxes hub"
+
+            else
+                text "TODO: Game finished message"
+
+        BoxPrompt ->
+            text "TODO: Box prompt"
+
+        SuccessMessage ->
+            text "TODO: Success message"
+
+        ErrorMessage ->
+            text "TODO: Error message"
 
 
 
