@@ -5,6 +5,8 @@ import Css exposing (..)
 import Html.Styled exposing (..)
 import Material.Icons as Filled
 import Material.Icons.Types exposing (Coloring(..))
+import Random
+import Random.List
 import Set exposing (Set)
 import Svg.Styled
 import UI.Styles
@@ -17,7 +19,7 @@ import UI.Styles
 type alias Box =
     { question : String
     , correctAnswer : String
-    , falseAnswers : ( String, String, String )
+    , falseAnswers : List String
     }
 
 
@@ -26,41 +28,48 @@ boxes =
     [ Box
         "Es un proceso en el que se decide si alguien ha hecho algo malo o no"
         "Juicio"
-        ( "Juez", "Fiscalía", "Abuso" )
+        [ "Juez", "Fiscalía", "Abuso" ]
     , Box
         "Persona que se encarga de escuchar a todas las personas involucradas en una situación y este decide cómo resolver el problema"
         "Juez"
-        ( "Fiscalía", "Sentencia", "Delito" )
+        [ "Fiscalía", "Sentencia", "Delito" ]
     , Box
         "Es cuando alguien hace algo malo que puede lastimar a otras personas o causar problemas que están en contra de las reglas de la sociedad"
         "Delito"
-        ( "Denuncia", "Sentencia", "Declaración" )
+        [ "Denuncia", "Sentencia", "Declaración" ]
     , Box
         "Cuando alguien lastima a una persona de forma física o mental"
         "Abuso"
-        ( "Declaración", "Juicio", "Denuncia" )
+        [ "Declaración", "Juicio", "Denuncia" ]
     , Box
         "Es cuando alguien le cuenta a una autoridad sobre algo malo que le ha sucedido o ha visto que le ha pasado a otra persona"
         "Denuncia"
-        ( "Declaración", "Juez", "Juicio" )
+        [ "Declaración", "Juez", "Juicio" ]
     , Box
         "Grupo de personas que se encargan de investigar cosas malas que suceden a las personas, asegurándose que haya justicia"
         "Fiscalía"
-        ( "Sentencia", "Juicio", "Declaración" )
+        [ "Sentencia", "Juicio", "Declaración" ]
     ]
+
+
+type alias BoxPromptData =
+    { box : Box
+    , options : List String
+    , attemptedOptions : Set String
+    }
 
 
 type CurrentPage
     = InitialPage
     | BoxesHub
-    | BoxPrompt
+    | BoxPrompt BoxPromptData
     | SuccessMessage
-    | ErrorMessage
+    | ErrorMessage BoxPromptData
 
 
 type alias Model =
     { currentPage : CurrentPage
-    , answeredBoxes : Set Box
+    , answeredBoxes : Set String
     }
 
 
@@ -78,12 +87,68 @@ init =
 
 
 type Msg
-    = NoOp
+    = StartGame
+    | SelectBox Box
+    | ShuffleBoxOptions Box (List String)
+    | SelectAnswer BoxPromptData String
+    | ContinueFromSuccessMessage
+    | ContinueFromErrorMessage BoxPromptData
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        StartGame ->
+            ( { model | currentPage = BoxesHub }
+            , Cmd.none
+            )
+
+        SelectBox box ->
+            ( model
+            , Random.generate
+                (ShuffleBoxOptions box)
+                (Random.List.shuffle (box.correctAnswer :: box.falseAnswers))
+            )
+
+        ShuffleBoxOptions box options ->
+            ( { model
+                | currentPage =
+                    BoxPrompt
+                        { box = box
+                        , options = options
+                        , attemptedOptions = Set.empty
+                        }
+              }
+            , Cmd.none
+            )
+
+        SelectAnswer { box, options, attemptedOptions } selectedAnswer ->
+            ( if selectedAnswer == box.correctAnswer then
+                { answeredBoxes = Set.insert box.correctAnswer model.answeredBoxes
+                , currentPage = SuccessMessage
+                }
+
+              else
+                { model
+                    | currentPage =
+                        ErrorMessage
+                            { attemptedOptions = Set.insert selectedAnswer attemptedOptions
+                            , box = box
+                            , options = options
+                            }
+                }
+            , Cmd.none
+            )
+
+        ContinueFromSuccessMessage ->
+            ( { model | currentPage = BoxesHub }
+            , Cmd.none
+            )
+
+        ContinueFromErrorMessage boxPromptData ->
+            ( { model | currentPage = BoxPrompt boxPromptData }
+            , Cmd.none
+            )
 
 
 
@@ -146,13 +211,13 @@ view model =
             else
                 text "TODO: Game finished message"
 
-        BoxPrompt ->
+        BoxPrompt { box, options, attemptedOptions } ->
             text "TODO: Box prompt"
 
         SuccessMessage ->
             text "TODO: Success message"
 
-        ErrorMessage ->
+        ErrorMessage boxPromptData ->
             text "TODO: Error message"
 
 
