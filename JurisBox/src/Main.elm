@@ -23,7 +23,31 @@ type alias Box =
 
 boxes : List Box
 boxes =
-    []
+    [ Box
+        "Es un proceso en el que se decide si alguien ha hecho algo malo o no"
+        "Juicio"
+        ( "Juez", "Fiscalía", "Abuso" )
+    , Box
+        "Persona que se encarga de escuchar a todas las personas involucradas en una situación y este decide cómo resolver el problema"
+        "Juez"
+        ( "Fiscalía", "Sentencia", "Delito" )
+    , Box
+        "Es cuando alguien hace algo malo que puede lastimar a otras personas o causar problemas que están en contra de las reglas de la sociedad"
+        "Delito"
+        ( "Denuncia", "Sentencia", "Declaración" )
+    , Box
+        "Cuando alguien lastima a una persona de forma física o mental"
+        "Abuso"
+        ( "Declaración", "Juicio", "Denuncia" )
+    , Box
+        "Es cuando alguien le cuenta a una autoridad sobre algo malo que le ha sucedido o ha visto que le ha pasado a otra persona"
+        "Denuncia"
+        ( "Declaración", "Juez", "Juicio" )
+    , Box
+        "Grupo de personas que se encargan de investigar cosas malas que suceden a las personas, asegurándose que haya justicia"
+        "Fiscalía"
+        ( "Sentencia", "Juicio", "Declaración" )
+    ]
 
 
 type CurrentPage
