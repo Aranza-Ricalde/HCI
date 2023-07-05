@@ -254,7 +254,55 @@ view model =
                 text "TODO: Game finished message"
 
         BoxPrompt { box, options, attemptedOptions } ->
-            text "TODO: Box prompt"
+            styled div
+                [ property "display" "grid"
+                , property "justify-items" "center"
+                ]
+                []
+                [ styled div
+                    [ property "display" "grid"
+                    , property "grid-template-columns" "repeat(2, 1fr)"
+                    , property "justify-content" "space-around"
+                    , property "justify-items" "center"
+                    , property "align-content" "space-around"
+                    , width (pct 100)
+                    , maxWidth (rem 50)
+                    , height (vh 100)
+                    , maxHeight (rem 40)
+                    ]
+                    []
+                    (styled
+                        div
+                        [ property "grid-column-start" "span 2"
+                        , property "align-self" "center"
+                        , padding2 (rem 1.5) (rem 1)
+                        , border3 (px 1) solid (hex "#000")
+                        , borderRadius (px 10)
+                        ]
+                        []
+                        [ styled p
+                            [ UI.Styles.heading
+                            , textAlign center
+                            ]
+                            []
+                            [ text box.question ]
+                        ]
+                        :: (options
+                                |> List.map
+                                    (\option ->
+                                        styled button
+                                            [ UI.Styles.button
+                                            , property "justify-self" "center"
+                                            , property "align-self" "center"
+                                            , maxWidth (rem 18)
+                                            , width (vw 40)
+                                            ]
+                                            [ onClick (SelectAnswer (BoxPromptData box options attemptedOptions) option) ]
+                                            [ text option ]
+                                    )
+                           )
+                    )
+                ]
 
         SuccessMessage ->
             text "TODO: Success message"
