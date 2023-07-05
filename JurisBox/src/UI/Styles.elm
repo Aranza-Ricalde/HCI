@@ -1,4 +1,8 @@
-module UI.Styles exposing (button, heading)
+module UI.Styles exposing
+    ( button
+    , ghostButton
+    , heading
+    )
 
 import Css exposing (..)
 
@@ -45,6 +49,15 @@ button =
             [ property "content" "\"\""
             , buttonOverlay
             ]
+        ]
+
+
+ghostButton : Style
+ghostButton =
+    batch
+        [ border (px 0)
+        , backgroundColor transparent
+        , cursor pointer
         ]
 
 

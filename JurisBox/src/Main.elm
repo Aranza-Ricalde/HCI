@@ -230,7 +230,23 @@ view model =
                             ]
                             []
                             [ text "Selecciona una caja" ]
-                            :: (boxes |> List.map (always giftBox))
+                            :: (boxes
+                                    |> List.map
+                                        (\box ->
+                                            if Set.member box.correctAnswer model.answeredBoxes then
+                                                text ""
+
+                                            else
+                                                styled button
+                                                    [ UI.Styles.ghostButton
+                                                    , property "align-self" "start"
+                                                    , property "transition-duration" "0.28s"
+                                                    , hover [ transform (scale 1.2) ]
+                                                    ]
+                                                    [ onClick (SelectBox box) ]
+                                                    [ giftBox ]
+                                        )
+                               )
                         )
                     ]
 
