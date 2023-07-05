@@ -51,7 +51,7 @@ boxes =
 
 
 type CurrentPage
-    = StartPage
+    = InitialPage
     | BoxesHub
     | BoxPrompt
     | SuccessMessage
@@ -66,7 +66,7 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { currentPage = StartPage
+    ( { currentPage = InitialPage
       , answeredBoxes = Set.empty
       }
     , Cmd.none
@@ -93,7 +93,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     case model.currentPage of
-        StartPage ->
+        InitialPage ->
             styled div
                 [ property "display" "grid"
                 , property "justify-items" "center"
