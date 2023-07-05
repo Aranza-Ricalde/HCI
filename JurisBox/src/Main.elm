@@ -1,8 +1,9 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, div, h1, img, text)
-import Html.Attributes exposing (src)
+import Css exposing (..)
+import Html.Styled exposing (..)
+import UI.Styles
 
 
 
@@ -37,9 +38,35 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , h1 [] [ text "Your Elm App is working!" ]
+    styled div
+        [ property "display" "grid"
+        , property "justify-items" "center"
+        , property "grid-template-columns" "1fr"
+        , property "grid-template-rows" "4fr 5fr"
+        , property "row-gap" "3.25rem"
+        , width (pct 100)
+        , height (vh 100)
+        ]
+        []
+        [ styled h1
+            [ UI.Styles.heading
+            , property "align-self" "end"
+            ]
+            []
+            [ text "Descubriendo la Justicia" ]
+        , styled
+            button
+            [ UI.Styles.button
+            , property "align-self" "start"
+            , width (rem 18)
+            , property "display" "grid"
+            , property "grid-template-columns" "auto auto"
+            , property "align-items" "center"
+            , property "justify-content" "center"
+            , property "grid-column-gap" "1rem"
+            ]
+            []
+            [ text "Jugar" ]
         ]
 
 
@@ -50,7 +77,7 @@ view model =
 main : Program () Model Msg
 main =
     Browser.element
-        { view = view
+        { view = view >> toUnstyled
         , init = \_ -> init
         , update = update
         , subscriptions = always Sub.none
