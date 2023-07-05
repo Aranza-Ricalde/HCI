@@ -242,6 +242,7 @@ view model =
                                                     , property "align-self" "start"
                                                     , property "transition-duration" "0.28s"
                                                     , hover [ transform (scale 1.2) ]
+                                                    , focus [ transform (scale 1.2) ]
                                                     ]
                                                     [ onClick (SelectBox box) ]
                                                     [ giftBox ]
