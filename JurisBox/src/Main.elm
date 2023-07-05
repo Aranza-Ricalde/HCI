@@ -3,6 +3,9 @@ module Main exposing (..)
 import Browser
 import Css exposing (..)
 import Html.Styled exposing (..)
+import Material.Icons as Filled
+import Material.Icons.Types exposing (Coloring(..))
+import Svg.Styled
 import UI.Styles
 
 
@@ -66,7 +69,21 @@ view model =
             , property "grid-column-gap" "1rem"
             ]
             []
-            [ text "Jugar" ]
+            [ text "Jugar"
+            , styled div
+                [ position relative, width (px 16) ]
+                []
+                [ styled div
+                    [ position absolute
+                    , property "display" "grid"
+                    , top (pct 50)
+                    , transform (translateY (pct -50))
+                    ]
+                    []
+                    [ Svg.Styled.fromUnstyled (Filled.chevron_right 48 Inherit)
+                    ]
+                ]
+            ]
         ]
 
 
