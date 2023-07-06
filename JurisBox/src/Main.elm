@@ -301,15 +301,19 @@ view model =
                         :: (options
                                 |> List.map
                                     (\option ->
-                                        styled button
-                                            [ UI.Styles.button
-                                            , property "justify-self" "center"
-                                            , property "align-self" "center"
-                                            , maxWidth (rem 18)
-                                            , width (vw 40)
-                                            ]
-                                            [ onClick (SelectAnswer (BoxPromptData box options attemptedOptions) option) ]
-                                            [ text option ]
+                                        if Set.member option attemptedOptions then
+                                            div [] []
+
+                                        else
+                                            styled button
+                                                [ UI.Styles.button
+                                                , property "justify-self" "center"
+                                                , property "align-self" "center"
+                                                , maxWidth (rem 18)
+                                                , width (vw 40)
+                                                ]
+                                                [ onClick (SelectAnswer (BoxPromptData box options attemptedOptions) option) ]
+                                                [ text option ]
                                     )
                            )
                     )
