@@ -234,7 +234,7 @@ view model =
                                     |> List.map
                                         (\box ->
                                             if Set.member box.correctAnswer model.answeredBoxes then
-                                                text ""
+                                                div [] []
 
                                             else
                                                 styled button
