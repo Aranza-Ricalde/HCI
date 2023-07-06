@@ -252,7 +252,18 @@ view model =
                     ]
 
             else
-                text "TODO: Game finished message"
+                styled div
+                    [ UI.Styles.messagePageLayout ]
+                    []
+                    [ styled div
+                        [ UI.Styles.messageBox ]
+                        []
+                        [ styled span
+                            [ UI.Styles.heading ]
+                            []
+                            [ text "Terminaste el juego ¡Felicidades!" ]
+                        ]
+                    ]
 
         BoxPrompt { box, options, attemptedOptions } ->
             styled div
@@ -277,8 +288,7 @@ view model =
                         [ property "grid-column-start" "span 2"
                         , property "align-self" "center"
                         , padding2 (rem 1.5) (rem 1)
-                        , border3 (px 1) solid (hex "#000")
-                        , borderRadius (px 10)
+                        , UI.Styles.borderedBox
                         ]
                         []
                         [ styled p
@@ -306,10 +316,40 @@ view model =
                 ]
 
         SuccessMessage ->
-            text "TODO: Success message"
+            styled div
+                [ UI.Styles.messagePageLayout ]
+                []
+                [ styled div
+                    [ UI.Styles.messageBox ]
+                    []
+                    [ styled span
+                        [ UI.Styles.heading ]
+                        []
+                        [ text "¡Has Acertado!" ]
+                    , styled button
+                        [ UI.Styles.button ]
+                        [ onClick ContinueFromSuccessMessage ]
+                        [ text "Continuar" ]
+                    ]
+                ]
 
         ErrorMessage boxPromptData ->
-            text "TODO: Error message"
+            styled div
+                [ UI.Styles.messagePageLayout ]
+                []
+                [ styled div
+                    [ UI.Styles.messageBox ]
+                    []
+                    [ styled span
+                        [ UI.Styles.heading ]
+                        []
+                        [ text "Sigue intentándolo ¡Estás cerca!" ]
+                    , styled button
+                        [ UI.Styles.button ]
+                        [ onClick (ContinueFromErrorMessage boxPromptData) ]
+                        [ text "Continuar" ]
+                    ]
+                ]
 
 
 giftBox : Html msg

@@ -1,7 +1,10 @@
 module UI.Styles exposing
-    ( button
+    ( borderedBox
+    , button
     , ghostButton
     , heading
+    , messageBox
+    , messagePageLayout
     )
 
 import Css exposing (..)
@@ -67,4 +70,37 @@ heading =
         [ fontWeight (int 500)
         , letterSpacing (pct 3.5)
         , fontSize (em 2.5)
+        ]
+
+
+borderedBox : Style
+borderedBox =
+    batch
+        [ border3 (px 1) solid (hex "#000")
+        , borderRadius (px 10)
+        ]
+
+
+messagePageLayout : Style
+messagePageLayout =
+    batch
+        [ width (pct 100)
+        , height (vh 100)
+        , property "display" "grid"
+        , property "place-items" "center"
+        ]
+
+
+messageBox : Style
+messageBox =
+    batch
+        [ width (pct 80)
+        , maxWidth (rem 50)
+        , padding (rem 2)
+        , borderedBox
+        , property "display" "grid"
+        , property "grid-template-columns" "1fr"
+        , property "grid-template-rows" "auto auto"
+        , property "justify-items" "center"
+        , property "grid-gap" "2rem"
         ]
